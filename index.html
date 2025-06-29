@@ -3,359 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Full Stack Developer Roadmap</title>
+    <title>Java Developer Roadmap & Progress Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .phase-card {
+        :root {
+            --primary-color: #6f42c1;
+            --secondary-color: #20c997;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+        
+        .roadmap-phase {
             transition: all 0.3s ease;
         }
-        .phase-card:hover {
+        
+        .roadmap-phase:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -35px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #3b82f6;
+        
+        .progress-indicator {
+            height: 5px;
+            background-color: #e9ecef;
         }
-        .tracking-tighter {
-            letter-spacing: -0.05em;
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+            transition: width 0.5s ease;
         }
-        .checkmark {
-            display: inline-block;
-            width: 22px;
-            height: 22px;
-            background-color: #10b981;
-            border-radius: 50%;
-            color: white;
-            text-align: center;
-            line-height: 22px;
-            margin-right: 8px;
-            font-size: 12px;
+        
+        .log-entry {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tech-icon {
+            width: 40px;
+            height: 40px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <!-- Header Section -->
-        <header class="text-center mb-16">
-            <h1 class="text-4xl font-extrabold tracking-tighter text-gray-900 mb-4">
-                Java Full Stack Developer Roadmap
-            </h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                A comprehensive guide to becoming a market-ready Java Full Stack Developer with latest technologies.
-            </p>
-            <div class="mt-8">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/73096f8a-0ce6-43e3-9880-08c8f29e6d12.png" alt="Modern office workspace featuring a laptop displaying Java code, books about software development, and a cup of coffee on a wooden desk" class="rounded-lg shadow-xl mx-auto" />
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-purple-800 mb-2">Java Developer Roadmap</h1>
+            <p class="text-lg text-gray-600">A comprehensive guide with progress tracking for your Java journey</p>
+            <div class="mt-6 flex justify-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/82a44632-84e4-439e-a622-59f5dfe3c305.png" alt="Java logo with coffee cup symbol on purple gradient background" class="rounded-lg shadow-md" width="120" height="120">
             </div>
         </header>
 
-        <!-- Roadmap Overview -->
-        <section class="mb-16 bg-white rounded-xl shadow-md p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Roadmap Overview</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-blue-50 p-5 rounded-lg border border-blue-100">
-                    <h3 class="font-semibold text-blue-800 mb-2">Core Java</h3>
-                    <p class="text-gray-700">Master Java fundamentals, OOP, collections, multithreading, and JVM internals</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <!-- Roadmap Section -->
+            <section class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-6 text-purple-800 border-b pb-2">Learning Path</h2>
+                
+                <div class="progress-indicator mb-6 rounded-full">
+                    <div id="overall-progress" class="progress-bar rounded-full" style="width: 0%"></div>
                 </div>
-                <div class="bg-purple-50 p-5 rounded-lg border border-purple-100">
-                    <h3 class="font-semibold text-purple-800 mb-2">Backend Development</h3>
-                    <p class="text-gray-700">Spring Boot, Microservices, Databases, REST APIs, and Security</p>
+                <p class="text-sm text-gray-500 text-right mb-6">Overall progress: <span id="progress-percent">0</span>%</p>
+                
+                <div class="space-y-6">
+                    <!-- Phase 1 -->
+                    <div class="roadmap-phase bg-white border border-gray-200 rounded-lg p-5 shadow-sm cursor-pointer" onclick="togglePhaseCompletion(this, 'phase1')">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-medium text-purple-700">Phase 1: Java Fundamentals</h3>
+                            <div class="tech-icon" style="background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/59915f00-8a84-43d8-a7d8-d0232e6baf05.png')" title="Java Basics"></div>
+                        </div>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>Syntax & Structure</li>
+                            <li>OOP Concepts</li>
+                            <li>Data Types & Variables</li>
+                            <li>Control Flow</li>
+                        </ul>
+                        <div class="mt-3 flex items-center text-sm">
+                            <span class="text-gray-500 mr-2">Status:</span>
+                            <span class="phase-status" id="phase1-status">Not Started</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2 -->
+                    <div class="roadmap-phase bg-white border border-gray-200 rounded-lg p-5 shadow-sm cursor-pointer" onclick="togglePhaseCompletion(this, 'phase2')">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-medium text-purple-700">Phase 2: Core Java</h3>
+                            <div class="tech-icon" style="background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ffc25035-3961-4958-876d-fda881b1f1fa.png')" title="Core Java"></div>
+                        </div>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>Collections Framework</li>
+                            <li>Exceptions Handling</li>
+                            <li>Multithreading</li>
+                            <li>File I/O</li>
+                        </ul>
+                        <div class="mt-3 flex items-center text-sm">
+                            <span class="text-gray-500 mr-2">Status:</span>
+                            <span class="phase-status" id="phase2-status">Not Started</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3 -->
+                    <div class="roadmap-phase bg-white border border-gray-200 rounded-lg p-5 shadow-sm cursor-pointer" onclick="togglePhaseCompletion(this, 'phase3')">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-medium text-purple-700">Phase 3: Advanced Java</h3>
+                            <div class="tech-icon" style="background-image: url('https://placehold.co/40x40')" title="Advanced Java"></div>
+                        </div>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>JDBC</li>
+                            <li>Servlets & JSP</li>
+                            <li>Design Patterns</li>
+                            <li>Collections Performance</li>
+                        </ul>
+                        <div class="mt-3 flex items-center text-sm">
+                            <span class="text-gray-500 mr-2">Status:</span>
+                            <span class="phase-status" id="phase3-status">Not Started</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 4 -->
+                    <div class="roadmap-phase bg-white border border-gray-200 rounded-lg p-5 shadow-sm cursor-pointer" onclick="togglePhaseCompletion(this, 'phase4')">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-medium text-purple-700">Phase 4: Frameworks & Tools</h3>
+                            <div class="tech-icon" style="background-image: url('https://placehold.co/40x40')" title="Java Frameworks"></div>
+                        </div>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-1">
+                            <li>Spring & Spring Boot</li>
+                            <li>Hibernate</li>
+                            <li>Maven/Gradle</li>
+                            <li>Testing (JUnit, Mockito)</li>
+                        </ul>
+                        <div class="mt-3 flex items-center text-sm">
+                            <span class="text-gray-500 mr-2">Status:</span>
+                            <span class="phase-status" id="phase4-status">Not Started</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-green-50 p-5 rounded-lg border border-green-100">
-                    <h3 class="font-semibold text-green-800 mb-2">Frontend Development</h3>
-                    <p class="text-gray-700">HTML/CSS/JS, React/Angular, state management, and modern tooling</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Detailed Roadmap Phases -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Learning Path Timeline</h2>
+            </section>
             
-            <div class="relative max-w-3xl mx-auto pl-12">
-                <!-- Phase 1 -->
-                <div class="timeline-item relative pb-10">
-                    <div class="phase-card bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">Phase 1: Java Foundations</h3>
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">1-2 Months</span>
-                        </div>
-                        <ul class="space-y-2 mt-4">
-                            <li class="flex items-start"><span class="checkmark">✓</span> Core Java concepts (OOP, Collections, Streams)</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> JDBC and database connectivity</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Multithreading and concurrency</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> JVM internals and performance tuning</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Unit testing with JUnit and Mockito</li>
-                        </ul>
+            <!-- Progress Log Section -->
+            <section class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-6 text-purple-800 border-b pb-2">Progress Log</h2>
+                
+                <form id="progress-form" class="mb-8">
+                    <div class="mb-4">
+                        <label for="log-date" class="block text-gray-700 text-sm font-medium mb-2">Date</label>
+                        <input type="date" id="log-date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="log-phase" class="block text-gray-700 text-sm font-medium mb-2">Phase</label>
+                        <select id="log-phase" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" required>
+                            <option value="">Select Phase</option>
+                            <option value="Phase 1: Java Fundamentals">Phase 1: Java Fundamentals</option>
+                            <option value="Phase 2: Core Java">Phase 2: Core Java</option>
+                            <option value="Phase 3: Advanced Java">Phase 3: Advanced Java</option>
+                            <option value="Phase 4: Frameworks & Tools">Phase 4: Frameworks & Tools</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="log-details" class="block text-gray-700 text-sm font-medium mb-2">Details</label>
+                        <textarea id="log-details" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" placeholder="What did you work on today?" required></textarea>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="log-hours" class="block text-gray-700 text-sm font-medium mb-2">Time Spent (hours)</label>
+                        <input type="number" id="log-hours" min="0.1" step="0.1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="log-progress" class="block text-gray-700 text-sm font-medium mb-2">Progress (%)</label>
+                        <input type="number" id="log-progress" min="0" max="100" step="1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Add Progress Log
+                    </button>
+                </form>
+                
+                <div class="border-t pt-6">
+                    <h3 class="text-xl font-medium mb-4 text-gray-800">Recent Logs</h3>
+                    <div id="logs-container" class="space-y-4">
+                        <!-- Log entries will be added here dynamically -->
                     </div>
                 </div>
-
-                <!-- Phase 2 -->
-                <div class="timeline-item relative pb-10">
-                    <div class="phase-card bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">Phase 2: Backend Mastery</h3>
-                            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">2-3 Months</span>
-                        </div>
-                        <ul class="space-y-2 mt-4">
-                            <li class="flex items-start"><span class="checkmark">✓</span> Spring Framework (Core, MVC, Data)</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Spring Boot and auto-configuration</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> RESTful API development</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Database (SQL & NoSQL) integration</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Spring Security and JWT</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Microservices architecture</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Phase 3 -->
-                <div class="timeline-item relative pb-10">
-                    <div class="phase-card bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">Phase 3: Frontend Development</h3>
-                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">1-2 Months</span>
-                        </div>
-                        <ul class="space-y-2 mt-4">
-                            <li class="flex items-start"><span class="checkmark">✓</span> HTML5, CSS3, and JavaScript ES6+</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> React.js or Angular framework</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> State management (Redux/Context API)</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Responsive design and CSS frameworks</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Frontend build tools (Webpack, Babel)</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Phase 4 -->
-                <div class="timeline-item relative pb-10">
-                    <div class="phase-card bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">Phase 4: Full Stack Integration</h3>
-                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded">1-2 Months</span>
-                        </div>
-                        <ul class="space-y-2 mt-4">
-                            <li class="flex items-start"><span class="checkmark">✓</span> Connecting frontend to backend APIs</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Authentication flows (JWT, OAuth)</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> WebSockets for real-time features</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Docker containerization</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> CI/CD pipelines</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Phase 5 -->
-                <div class="timeline-item relative">
-                    <div class="phase-card bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">Phase 5: Advanced Topics</h3>
-                            <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Ongoing</span>
-                        </div>
-                        <ul class="space-y-2 mt-4">
-                            <li class="flex items-start"><span class="checkmark">✓</span> Cloud deployment (AWS/Azure/GCP)</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Kubernetes orchestration</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Advanced database optimization</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Performance testing and monitoring</li>
-                            <li class="flex items-start"><span class="checkmark">✓</span> Domain-Driven Design</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Market Insights -->
-        <section class="mb-16 bg-white rounded-xl shadow-md p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Market Demand Analysis</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="font-semibold text-lg mb-3 text-gray-700">Most Requested Skills</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center"><span class="inline-block w-2 h-2 bg-blue-600 rounded-full mr-2"></span> Spring Boot (92% of job postings)</li>
-                        <li class="flex items-center"><span class="inline-block w-2 h-2 bg-blue-600 rounded-full mr-2"></span> Microservices architecture (85%)</li>
-                        <li class="flex items-center"><span class="inline-block w-2 h-2 bg-blue-600 rounded-full mr-2"></span> React or Angular (78%)</li>
-                        <li class="flex items-center"><span class="inline-block w-2 h-2 bg-blue-600 rounded-full mr-2"></span> Cloud technologies (AWS/Azure, 70%)</li>
-                        <li class="flex items-center"><span class="inline-block w-2 h-2 bg-blue-600 rounded-full mr-2"></span> Docker/Kubernetes (65%)</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold text-lg mb-3 text-gray-700">Salary Range (2024)</h3>
-                    <div class="space-y-3">
-                        <div>
-                            <div class="flex justify-between text-sm text-gray-600 mb-1">
-                                <span>Junior Developer</span>
-                                <span>$70K - $90K</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 60%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm text-gray-600 mb-1">
-                                <span>Mid-Level</span>
-                                <span>$95K - $120K</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 80%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm text-gray-600 mb-1">
-                                <span>Senior Developer</span>
-                                <span>$125K - $160K</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-purple-600 h-2.5 rounded-full" style="width: 95%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Resource Recommendations -->
-        <section class="mb-16">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Recommended Learning Resources</h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/15580916-d050-4af7-9d3e-ce7b80cc71bf.png" alt="Book cover showing 'Effective Java' by Joshua Bloch with blue background and white text" class="w-full h-48 object-cover" />
-                    <div class="p-5">
-                        <h3 class="font-bold text-lg mb-2">Effective Java</h3>
-                        <p class="text-gray-600 text-sm mb-3">Joshua Bloch's definitive guide to Java best practices.</p>
-                        <a href="#" class="text-blue-600 text-sm font-medium hover:underline">View on Amazon</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a974e962-c755-48fa-8662-d8c0b08efad5.png" alt="Spring Boot in Action book cover with green branding and code snippets" class="w-full h-48 object-cover" />
-                    <div class="p-5">
-                        <h3 class="font-bold text-lg mb-2">Spring Boot in Action</h3>
-                        <p class="text-gray-600 text-sm mb-3">Comprehensive guide to building Spring applications.</p>
-                        <a href="#" class="text-blue-600 text-sm font-medium hover:underline">View on Manning</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/059a0838-a73c-4719-9ea8-dce55305afda.png" alt="Modern Frontend Development course banner featuring React logo and colorful UI elements" class="w-full h-48 object-cover" />
-                    <div class="p-5">
-                        <h3 class="font-bold text-lg mb-2">React - The Complete Guide</h3>
-                        <p class="text-gray-600 text-sm mb-3">Top-rated Udemy course for modern frontend development.</p>
-                        <a href="#" class="text-blue-600 text-sm font-medium hover:underline">View on Udemy</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Call to Action -->
-        <section class="text-center bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl py-12 px-6 text-white">
-            <h2 class="text-2xl font-bold mb-4">Ready to Become a Java Full Stack Developer?</h2>
-            <p class="mb-6 text-blue-100 max-w-2xl mx-auto">Start your journey today with our free learning checklist and personalized study plan.</p>
-            <button class="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium shadow-lg hover:bg-blue-50 transition-colors">
-                Download Study Plan
-            </button>
-        </section>
+            </section>
+        </div>
     </div>
-
-    <!-- Admin Login -->
-    <section id="adminLogin" class="max-w-xs mx-auto px-4 py-8">
-        <div class="bg-white rounded-xl shadow-md p-6">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Admin Login</h2>
-            <input type="password" id="adminPassword" class="w-full p-2 border rounded mb-2" placeholder="Enter admin password">
-            <button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Login</button>
-        </div>
-    </section>
-
-    <!-- Progress Log Section - Initially Hidden -->
-    <section id="logSection" class="max-w-7xl mx-auto px-4 py-8" style="display: none;">
-    <section class="max-w-7xl mx-auto px-4 py-8">
-        <div class="bg-white rounded-xl shadow-md p-6">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">My Learning Progress</h2>
-            <div class="mb-4">
-                <textarea id="logEntry" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="What did you learn today?"></textarea>
-                <button id="addLog" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                    Add Log Entry
-                </button>
-            </div>
-            <div id="logContainer" class="border-t pt-4">
-                <h3 class="font-semibold text-gray-700 mb-2">Recent Entries:</h3>
-                <ul id="logEntries" class="space-y-2">
-                    <!-- Log entries will appear here -->
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <p class="text-gray-400">© Java Full Stack Developer Roadmap. All rights reserved. By Aryaman Mohanty</p>
-                <p class="mt-2 text-sm text-gray-500">Data based on current market analysis and job postings.</p>
-                <p class="mt-4 text-sm text-gray-400">
-                    To publish this roadmap: <br>
-                    1. Save this HTML file as "java_roadmap.html"<br>
-                    2. Upload to any web hosting service (GitHub Pages, Netlify, Vercel, etc.)<br>
-                    3. Keep the "storage.googleapis.com" image URLs or replace with your own images
-                </p>
-            </div>
-        </div>
-    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Phase card highlighting
-            const cards = document.querySelectorAll('.phase-card');
-            cards.forEach(card => {
-                card.addEventListener('click', function() {
-                    cards.forEach(c => c.classList.remove('ring-2', 'ring-blue-500'));
-                    this.classList.add('ring-2', 'ring-blue-500');
-                });
+            // Set default date to today
+            document.getElementById('log-date').valueAsDate = new Date();
+            
+            // Load saved progress and logs
+            loadProgress();
+            loadLogs();
+            
+            // Handle form submission
+            document.getElementById('progress-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addLog();
             });
-
-            // Progress logging functionality
-            const logEntry = document.getElementById('logEntry');
-            const addLog = document.getElementById('addLog');
-            const logEntries = document.getElementById('logEntries');
-
-            // Load saved logs from localStorage
-            if(localStorage.getItem('learningLogs')) {
-                logEntries.innerHTML = localStorage.getItem('learningLogs');
-            }
-
-            addLog.addEventListener('click', function() {
-                if(logEntry.value.trim() !== '') {
-                    const now = new Date();
-                    const timestamp = now.toLocaleString();
-                    const entry = document.createElement('li');
-                    entry.className = 'bg-gray-50 p-3 rounded-lg';
-                    entry.innerHTML = `
-                        <div class="flex justify-between items-start">
-                            <span class="text-gray-700">${logEntry.value}</span>
-                            <div class="flex items-center">
-                                <small class="text-gray-500 text-sm mr-2">${timestamp}</small>
-                                <button class="delete-log text-red-600 hover:text-red-800" data-id="${Date.now()}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    logEntries.prepend(entry);
-                    logEntry.value = '';
-                    
-                    // Save to localStorage
-                    localStorage.setItem('learningLogs', logEntries.innerHTML);
-                }
-            });
-
-            // Allow Enter key to submit log
-            logEntry.addEventListener('keypress', function(e) {
-                if(e.key === 'Enter') {
-                    addLog.click();
-                }
-            });
+            
+            // Calculate and update overall progress
+            updateOverallProgress();
         });
+        
+        // Load saved progress from localStorage
+        function loadProgress() {
+            const phases = ['phase1', 'phase2', 'phase3', 'phase4'];
+            phases.forEach(phase => {
+                const status = localStorage.getItem(phase);
+                if (status === 'completed') {
+                    document.getElementById(`${phase}-status`).textContent = 'Completed';
+                    document.querySelector(`[onclick="togglePhaseCompletion(this, '${phase}')"]`).classList.add('bg-purple-50', 'border-purple-300');
+                }
+            });
+        }
+        
+        // Load saved logs from localStorage
+        function loadLogs() {
+            const logs = JSON.parse(localStorage.getItem('progressLogs') || '[]');
+            const logsContainer = document.getElementById('logs-container');
+            logsContainer.innerHTML = '';
+            
+            if (logs.length === 0) {
+                logsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">No progress logs yet. Add your first log above!</p>';
+                return;
+            }
+            
+            logs.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(log => {
+                addLogToUI(log);
+            });
+        }
+        
+        // Add a new log to both UI and localStorage
+        function addLog() {
+            const date = document.getElementById('log-date').value;
+            const phase = document.getElementById('log-phase').value;
+            const details = document.getElementById('log-details').value;
+            const hours = document.getElementById('log-hours').value;
+            
+            const progress = document.getElementById('log-progress').value;
+            const newLog = {
+                date,
+                phase,
+                details,
+                hours,
+                progress: progress ? `${progress}%` : null
+            };
+            
+            // Save to localStorage
+            const logs = JSON.parse(localStorage.getItem('progressLogs') || '[]');
+            logs.push(newLog);
+            localStorage.setItem('progressLogs', JSON.stringify(logs));
+            
+            // Add to UI
+            addLogToUI(newLog);
+            
+            // Reset form
+            document.getElementById('progress-form').reset();
+            document.getElementById('log-date').valueAsDate = new Date();
+        }
+        
+        // Add a log entry to the UI
+        function addLogToUI(log) {
+            const logsContainer = document.getElementById('logs-container');
+            
+            // Remove "no logs" message if present
+            if (logsContainer.innerHTML.includes('No progress logs yet')) {
+                logsContainer.innerHTML = '';
+            }
+            
+            const logElement = document.createElement('div');
+            logElement.className = 'log-entry bg-gray-50 border border-gray-200 rounded-lg p-4';
+            
+            const formattedDate = new Date(log.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            
+            logElement.innerHTML = `
+                <div class="flex justify-between items-start mb-2">
+                    <h4 class="font-medium text-purple-700">${log.phase}</h4>
+                    <div class="flex items-center">
+                        <div class="flex flex-col text-right">
+                            <span class="text-xs font-medium text-purple-800">Progress: ${log.progress || 'N/A'}</span>
+                            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded">${log.hours} hrs</span>
+                            <span class="text-xs text-gray-500">${formattedDate}</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-700 mt-1">${log.details}</p>
+            `;
+            
+            logsContainer.prepend(logElement);
+        }
+        
+        // Toggle phase completion status
+        function togglePhaseCompletion(element, phaseId) {
+            const statusElement = document.getElementById(`${phaseId}-status`);
+            
+            if (statusElement.textContent === 'Completed') {
+                statusElement.textContent = 'Not Started';
+                element.classList.remove('bg-purple-50', 'border-purple-300');
+                localStorage.removeItem(phaseId);
+            } else {
+                statusElement.textContent = 'Completed';
+                element.classList.add('bg-purple-50', 'border-purple-300');
+                localStorage.setItem(phaseId, 'completed');
+            }
+            
+            updateOverallProgress();
+        }
+        
+        // Calculate and update overall progress
+        function updateOverallProgress() {
+            const totalPhases = 4;
+            let completedPhases = 0;
+            
+            for (let i = 1; i <= totalPhases; i++) {
+                if (localStorage.getItem(`phase${i}`) === 'completed') {
+                    completedPhases++;
+                }
+            }
+            
+            const progressPercentage = Math.round((completedPhases / totalPhases) * 100);
+            document.getElementById('progress-percent').textContent = progressPercentage;
+            document.getElementById('overall-progress').style.width = `${progressPercentage}%`;
+            
+            // Update progress bar color based on completion
+            const progressBar = document.getElementById('overall-progress');
+            if (progressPercentage >= 75) {
+                progressBar.style.backgroundColor = '#28a745'; // Green
+            } else if (progressPercentage >= 50) {
+                progressBar.style.backgroundColor = '#20c997'; // Teal
+            } else if (progressPercentage >= 25) {
+                progressBar.style.backgroundColor = '#ffc107'; // Yellow
+            } else {
+                progressBar.style.backgroundColor = '#fd7e14'; // Orange
+            }
+        }
     </script>
 </body>
 </html>
